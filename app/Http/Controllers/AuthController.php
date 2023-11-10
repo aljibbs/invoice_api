@@ -70,17 +70,27 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()) {
-            return response('All inputs required', Response::HTTP_BAD_REQUEST);
+            return response()
+            ->json(["message" => "All inputs required", "result" => null])
+            ->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
 
         $user = User::where('email', $req['email'])->first();
 
-        if (!$user || !Hash::check($req['password'], $user->password)) {
+        if (!$user) {
             return response()
             ->json([
                     "message" => "User account not found!", "result" => null
                 ])
             ->setStatusCode(Response::HTTP_NOT_FOUND);
+        }
+
+        if (!Hash::check($req['password'], $user->password)) {
+            return response()
+            ->json([
+                    "message" => "Invalid credentials", "result" => null
+                ])
+            ->setStatusCode(Response::HTTP_UNAUTHORIZED);
         }
 
         try{
