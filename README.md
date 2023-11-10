@@ -15,10 +15,21 @@ API.
 ### Api Documentation
 
 -   **POST /auth/register**
-    -   Paramters
+
+    -   Parameters
         -   email
         -   password
         -   password_confirmation
+
+-   **POST /auth/login**
+
+    -   Parameters
+        -   email
+        -   password
+
+-   **GET /auth/logout**
+    -   Authorization Token
+        -   Bearer {token}
 
 ## License
 
