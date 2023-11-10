@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->comment("id for sales person");
             $table->foreignId('customer_id');
             $table->decimal('total_amount', 8, 2, true);
+            $table->date('due_date');
             $table->timestamps();
         });
     }
