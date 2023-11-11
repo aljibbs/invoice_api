@@ -14,6 +14,10 @@ API.
 
 ### Api Documentation
 
+-   **Endpoint Base Url: /api**
+
+-   **Accept Header application/json**
+
 -   **POST /auth/register**
 
     -   Parameters
@@ -28,6 +32,11 @@ API.
         -   password
 
 -   **GET /auth/logout**
+
+    -   Authorization Token
+        -   Bearer {token}
+
+-   **GET /me (Get current User's Profile)**
     -   Authorization Token
         -   Bearer {token}
 
