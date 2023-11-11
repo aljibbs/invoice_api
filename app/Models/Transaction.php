@@ -18,6 +18,7 @@ class Transaction extends Model
         'customer_id',
         'total_amount',
         'due_date',
+        'invoice_number'
     ];
 
     public function getIssuedDateAttribute()
