@@ -16,13 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
-    return response()->json([
-        'message' => "User Profile",
-        'result' => $request->user()
-    ])->setStatusCode(Response::HTTP_OK);
-});
-
 
 Route::group(['prefix' => 'auth'], function (){
     Route::post('register', [AuthController::class, 'register']);
@@ -31,9 +24,27 @@ Route::group(['prefix' => 'auth'], function (){
     Route::middleware('auth:sanctum')->get('logout', [AuthController::class, 'logout']);
 });
 
+Route::group(['middleware' => 'auth:sanctum'], function (){
+    Route::get('/me', function (Request $request) {
+        return response()->json([
+            'message' => "User Profile",
+            'result' => $request->user()
+        ])->setStatusCode(Response::HTTP_OK);
+    });
 
-Route::group(['prefix' => 'transactions', 'middleware' => 'auth:sanctum'], function (){
-    Route::get('/{invoiceNumber}', [AuthController::class, 'getInvoice']);
-    Route::post('/', [AuthController::class, 'save']);
-    Route::get('/all', [AuthController::class, 'all']);
+    Route::group(['prefix' => 'transactions'], function (){
+        Route::get('/{invoiceNumber}', [TransactionsController::class, 'getInvoice']);
+        Route::post('/', [TransactionsController::class, 'save']);
+        Route::get('/all', [TransactionsController::class, 'all']);
+    });
+
+    Route::group(['prefix' => 'products'], function (){
+        Route::get('/{product}', [ProductController::class, 'getProduct']);
+        Route::post('/', [ProductController::class, 'save']);
+        Route::get('/all', [ProductController::class, 'all']);
+    });
 });
+
+
+
+
