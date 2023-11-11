@@ -16,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
+    return response()->json([
+        'message' => "User Profile",
+        'result' => $request->user()
+    ])->setStatusCode(Response::HTTP_OK);
+});
+
+
 Route::group(['prefix' => 'auth'], function (){
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
@@ -25,12 +33,5 @@ Route::group(['prefix' => 'auth'], function (){
 
 
 Route::group(['prefix' => 'transactions', 'middleware' => 'auth:sanctum'], function (){
-    Route::get('/me', function (Request $request) {
-        return response()->json([
-            'message' => "User Profile",
-            'result' => $request->user()
-        ])->setStatusCode(Response::HTTP_OK);
-    });
-
     Route::get('/', [AuthController::class, 'all']);
 });
