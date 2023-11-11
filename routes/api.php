@@ -33,7 +33,7 @@ Route::group(['prefix' => 'auth'], function (){
 
 
 Route::group(['prefix' => 'transactions', 'middleware' => 'auth:sanctum'], function (){
-    Route::get('/', [AuthController::class, 'all']);
-
+    Route::get('/{invoiceNumber}', [AuthController::class, 'getInvoice']);
     Route::post('/', [AuthController::class, 'save']);
+    Route::get('/all', [AuthController::class, 'all']);
 });
