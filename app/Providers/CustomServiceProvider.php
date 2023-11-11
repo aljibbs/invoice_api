@@ -19,7 +19,6 @@ class CustomServiceProvider extends ServiceProvider
             CustomerService::class,
             ProductService::class,
             TransactionService::class,
-            TransactionItemService::class
         ];
 
         foreach ($services as $svc) {
