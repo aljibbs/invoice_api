@@ -7,8 +7,7 @@ use App\Models\Transaction;
 interface ITransactionService {
     public function all(): array;
     public function findById($id): ?Transaction;
-    public function findByInvoiceNumber($invoiceNumber): ?Transaction;
+    public function findByInvoiceNumber($id): ?Transaction;
     public function create(array $data): Transaction;
-    // public function update($id, array $data);
-    // public function delete($id);
+    public function saveItems(array $data);
 }

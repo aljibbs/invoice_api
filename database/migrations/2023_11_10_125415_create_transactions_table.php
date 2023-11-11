@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('user_id')->comment("id for sales person");
             $table->foreignId('customer_id');
             $table->string('invoice_number')->nullable();
-            $table->decimal('total_amount', 8, 2, true);
-            $table->date('due_date');
+            $table->decimal('total_amount', 8, 2, true)->default(0.00);
+            $table->date('due_date')->default(now());
             $table->timestamps();
         });
     }

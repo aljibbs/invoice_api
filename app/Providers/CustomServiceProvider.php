@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Services\Customer\CustomerService;
+use App\Services\Product\ProductService;
 use App\Services\Transaction\TransactionService;
+use App\Services\TransactionItem\TransactionItemService;
 use Illuminate\Support\ServiceProvider;
 
-class CustomerServiceProvider extends ServiceProvider
+class CustomServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -13,7 +16,10 @@ class CustomerServiceProvider extends ServiceProvider
     public function register(): void
     {
         $services = [
+            CustomerService::class,
+            ProductService::class,
             TransactionService::class,
+            TransactionItemService::class
         ];
 
         foreach ($services as $svc) {
