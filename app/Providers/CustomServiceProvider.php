@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Services\Customer\CustomerService;
+use App\Services\Customer\ICustomerService;
+use App\Services\Product\IProductService;
 use App\Services\Product\ProductService;
+use App\Services\Transaction\ITransactionService;
 use App\Services\Transaction\TransactionService;
-use App\Services\TransactionItem\TransactionItemService;
 use Illuminate\Support\ServiceProvider;
 
 class CustomServiceProvider extends ServiceProvider
@@ -16,15 +18,13 @@ class CustomServiceProvider extends ServiceProvider
     public function register(): void
     {
         $services = [
-            CustomerService::class,
-            ProductService::class,
-            TransactionService::class,
+            ICustomerService::class => CustomerService::class,
+            IProductService::class => ProductService::class,
+            ITransactionService::class => TransactionService::class,
         ];
 
-        foreach ($services as $svc) {
-            $this->app->bind($svc, function () use ($svc) {
-                return new $svc();
-            });
+        foreach ($services as $interface => $implementation) {
+            $this->app->bind($interface, $implementation);
         }
     }
 

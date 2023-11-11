@@ -16,4 +16,8 @@ class ProductService implements IProductService{
     public function create(array $data): Product{
         return Product::create($data);
     }
+
+    public function update(Product $product, array $data){
+        return $product->update($data);
+    }
 }

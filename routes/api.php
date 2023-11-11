@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -35,13 +36,14 @@ Route::group(['middleware' => 'auth:sanctum'], function (){
     Route::group(['prefix' => 'transactions'], function (){
         Route::get('/{invoiceNumber}', [TransactionsController::class, 'getInvoice']);
         Route::post('/', [TransactionsController::class, 'save']);
-        Route::get('/all', [TransactionsController::class, 'all']);
+        Route::get('/', [TransactionsController::class, 'all']);
     });
 
     Route::group(['prefix' => 'products'], function (){
         Route::get('/{id}', [ProductController::class, 'getProduct']);
+        Route::put('/{id}', [ProductController::class, 'update']);
         Route::post('/', [ProductController::class, 'save']);
-        Route::get('/all', [ProductController::class, 'all']);
+        Route::get('/', [ProductController::class, 'all']);
     });
 });
 

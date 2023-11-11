@@ -96,7 +96,7 @@ class TransactionsController extends Controller
                 "message" => "Transaction Saved!",
                 "result" => $trans->load('transactionItems')
             ])
-            ->setStatusCode(Response::HTTP_OK);
+            ->setStatusCode(Response::HTTP_CREATED);
         } catch (\Exception $ex) {
             // Log error
         }
