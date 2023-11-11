@@ -34,4 +34,6 @@ Route::group(['prefix' => 'auth'], function (){
 
 Route::group(['prefix' => 'transactions', 'middleware' => 'auth:sanctum'], function (){
     Route::get('/', [AuthController::class, 'all']);
+
+    Route::post('/', [AuthController::class, 'save']);
 });
