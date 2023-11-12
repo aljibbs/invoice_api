@@ -23,7 +23,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'quantity' => 'integer|min:1',
+            'quantity' => 'sometimes|integer|min:1',
             'cost_price' => 'required|decimal:2|min:1.00',
             'selling_price' => 'required|decimal:2|min:1.00'
         ];
