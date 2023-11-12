@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Requests\StockUpdateRequest;
 use App\Services\Product\IProductService;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -28,6 +30,7 @@ class ProductController extends Controller
             ->setStatusCode(Response::HTTP_OK);
         } catch (\Exception $ex) {
             // Log error
+            Log::error($ex);
         }
 
         return response()->json([
@@ -52,6 +55,7 @@ class ProductController extends Controller
 
         } catch (\Exception $ex) {
             // Log error
+            Log::error($ex);
         }
 
         return response()->json([
@@ -65,6 +69,7 @@ class ProductController extends Controller
 
         try{
             $product = $this->productService->create($validatedData);
+            $product->refresh();
 
             return response()->json([
                 'message' => "Product Created",
@@ -72,6 +77,7 @@ class ProductController extends Controller
             ])->setStatusCode(Response::HTTP_CREATED);
         } catch(\Exception $ex) {
             // Log error
+            Log::error($ex);
         }
 
         return response()->json([
@@ -80,7 +86,7 @@ class ProductController extends Controller
         ])->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    public function update(ProductRequest $req, $id){
+    public function update(ProductUpdateRequest $req, $id){
         $validatedData = $req->validated();
 
         $product = $this->productService->findById($id);
@@ -101,6 +107,7 @@ class ProductController extends Controller
             ])->setStatusCode(Response::HTTP_OK);
         } catch(\Exception $ex) {
             // Log error
+            Log::error($ex);
         }
 
         return response()->json([
@@ -109,11 +116,11 @@ class ProductController extends Controller
         ])->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    public function addStock(StockUpdateRequest $req){
+    public function addStock(StockUpdateRequest $req, $id){
         $validatedData = $req->validated();
 
         try{
-            $product = $this->productService->findById($validatedData['product_id']);
+            $product = $this->productService->findById($id);
 
             if(!$product) {
                 return response()
@@ -132,6 +139,7 @@ class ProductController extends Controller
             ])->setStatusCode(Response::HTTP_OK);
         } catch(\Exception $ex) {
             // Log error
+            Log::error($ex);
         }
 
         return response()->json([

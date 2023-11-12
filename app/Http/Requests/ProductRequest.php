@@ -11,7 +11,7 @@ class ProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,18 +24,8 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|string',
             'quantity' => 'integer|min:1',
-            'cost_price' => [
-                'required',
-                'numeric',
-                'min:1.00',
-                'regex:/^\d+(\.\d{1,2})?$/',
-            ],
-            'selling_price' => [
-                'required',
-                'numeric',
-                'min:1.00',
-                'regex:/^\d+(\.\d{1,2})?$/',
-            ],
+            'cost_price' => 'required|decimal:2|min:1.00',
+            'selling_price' => 'required|decimal:2|min:1.00'
         ];
     }
 }

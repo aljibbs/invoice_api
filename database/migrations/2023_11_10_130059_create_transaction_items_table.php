@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('transaction_id');
             $table->foreignId('product_id');
-            $table->decimal('unit_price', 8, 2, true);
+            $table->decimal('unit_price', 8, 2);
             $table->integer('quantity');
-            $table->decimal('amount', 8, 2, true);
+            $table->decimal('amount', 8, 2);
             $table->text('description');
             $table->timestamps();
         });
