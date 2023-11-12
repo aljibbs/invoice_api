@@ -29,6 +29,7 @@ API.
 -   **POST /auth/login**
 
     -   Parameters
+
         ```
         - email
         - password
@@ -37,6 +38,7 @@ API.
 -   **GET /auth/logout**
 
     -   Authorization Token
+
         ```
         Bearer {token}
         ```
@@ -44,6 +46,7 @@ API.
 -   **GET /me (Get current User's Profile)**
 
     -   Authorization Token
+
         ```
         Bearer {token}
         ```
@@ -57,6 +60,7 @@ API.
         ```
 
     -   Parameters
+
         ```
         - name
         - quantity (optional)
@@ -67,6 +71,7 @@ API.
 -   **GET /products/{product_id} (Get product)**
 
     -   Authorization Token
+
         ```
         Bearer {token}
         ```
@@ -74,6 +79,7 @@ API.
 -   **GET /products (Get all products)**
 
     -   Authorization Token
+
         ```
         Bearer {token}
         ```
@@ -87,6 +93,7 @@ API.
         ```
 
     -   Parameters (Atleast one parameter must be present)
+
         ```
         - name (optional)
         - quantity (optional)
@@ -103,6 +110,7 @@ API.
         ```
 
     -   Parameters
+
         ```
         quantity
         ```
