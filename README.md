@@ -19,13 +19,19 @@ API.
 -   **POST /auth/register**
 
     -   Parameters
-        `-   email`
-        `-   password`
-        `-   password_confirmation`
+
+    ```
+        {
+            "- email",
+            "- password",
+            "- password_confirmation",
+        }
+    ```
 
 -   **POST /auth/login**
 
     -   Parameters
+
         `-   email`
         `-   password`
 
