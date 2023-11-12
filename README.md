@@ -37,18 +37,24 @@ API.
 -   **GET /auth/logout**
 
     -   Authorization Token
-        `Bearer {token}`
+        ```
+        Bearer {token}
+        ```
 
 -   **GET /me (Get current User's Profile)**
 
     -   Authorization Token
-        `Bearer {token}`
+        ```
+        Bearer {token}
+        ```
 
 -   **POST /products (Create new product)**
 
     -   Authorization Token
 
-        `Bearer {token}`
+        ```
+        Bearer {token}
+        ```
 
     -   Parameters
         ```
@@ -61,18 +67,24 @@ API.
 -   **GET /products/{product_id} (Get product)**
 
     -   Authorization Token
-        `Bearer {token}`
+        ```
+        Bearer {token}
+        ```
 
 -   **GET /products (Get all products)**
 
     -   Authorization Token
-        `Bearer {token}`
+        ```
+        Bearer {token}
+        ```
 
 -   **PUT /products/{product_id} (Update product)**
 
     -   Authorization Token
 
-        `Bearer {token}`
+        ```
+        Bearer {token}
+        ```
 
     -   Parameters (Atleast one parameter must be present)
         ```
@@ -86,10 +98,14 @@ API.
 
     -   Authorization Token
 
-        `Bearer {token}`
+        ```
+        Bearer {token}
+        ```
 
     -   Parameters
-        `quantity`
+        ```
+        quantity
+        ```
 
 ## License
 
