@@ -19,54 +19,68 @@ API.
 -   **POST /auth/register**
 
     -   Parameters
-
-        -   email
-        -   password
-        -   password_confirmation
+        `-   email`
+        `-   password`
+        `-   password_confirmation`
 
 -   **POST /auth/login**
 
-    -   Parameters - email - password
+    -   Parameters
+        `-   email`
+        `-   password`
 
 -   **GET /auth/logout**
 
-    -   Authorization Token - Bearer {token}
+    -   Authorization Token
+        -   Bearer {token}
 
 -   **GET /me (Get current User's Profile)**
 
-    -   Authorization Token - Bearer {token}
+    -   Authorization Token
+        -   Bearer {token}
 
 -   **POST /products (Create new product)**
 
     -   Authorization Token
 
-            -   Bearer {token}
+        -   Bearer {token}
 
-    -   Parameters - name - quantity (optional) - cost_price - selling_price
+    -   Parameters
+        -   name
+        -   quantity (optional)
+        -   cost_price
+        -   selling_price
 
 -   **GET /products/{product_id} (Get product)**
 
-    -   Authorization Token - Bearer {token}
+    -   Authorization Token
+        -   Bearer {token}
 
 -   **GET /products (Get all products)**
 
-    -   Authorization Token - Bearer {token}
+    -   Authorization Token
+        -   Bearer {token}
 
 -   **PUT /products/{product_id} (Update product)**
 
     -   Authorization Token
 
-            -   Bearer {token}
+        -   Bearer {token}
 
-    -   Parameters (Atleast one parameter must be present) - name (optional) - quantity (optional) - cost_price (optional) - selling_price (optional)
+    -   Parameters (Atleast one parameter must be present)
+        -   name (optional)
+        -   quantity (optional)
+        -   cost_price (optional)
+        -   selling_price (optional)
 
 -   **POST /products/{product_id}/add_stock (Add new stock quantity)**
 
     -   Authorization Token
 
-            -   Bearer {token}
+        -   Bearer {token}
 
-    -   Parameters - quantity
+    -   Parameters
+        -   quantity
 
 ## License
 
