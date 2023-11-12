@@ -18,7 +18,11 @@ API.
 
 -   **POST /auth/register**
 
-    -   Parameters - email - password - password_confirmation
+    -   Parameters
+
+        -   email
+        -   password
+        -   password_confirmation
 
 -   **POST /auth/login**
 
