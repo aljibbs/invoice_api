@@ -21,9 +21,9 @@ API.
     -   Parameters
 
     ```
-            - email,
-            - password,
-            - password_confirmation,
+    - email,
+    - password,
+    - password_confirmation,
     ```
 
 -   **POST /auth/login**
