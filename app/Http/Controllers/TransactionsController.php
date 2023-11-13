@@ -60,8 +60,8 @@ class TransactionsController extends Controller
             if(!$customer) {
                 $customer = $this->customerService->create([
                     'phone' => $validatedData['customer_phone'],
-                    'name' => $validatedData['customer_name'],
-                    'address' => $validatedData['customer_address'],
+                    'name' => $validatedData['customer_name'] ?? null,
+                    'address' => $validatedData['customer_address'] ?? null,
                 ]);
             }
 
@@ -83,7 +83,7 @@ class TransactionsController extends Controller
                 $product = $this->productService->findById($productId);
 
                 if($quantity > $product->quantity) {
-                    throw new \Exception("Quantity of {$product->name} is not sufficient. Only {$product->quantity} left");
+                    return response()->json(['message' => "Quantity of {$product->name} is not sufficient. Only {$product->quantity} left",  'result' => null], Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
                 $amt = $quantity * $product->selling_price;
@@ -138,6 +138,12 @@ class TransactionsController extends Controller
     public function getInvoice(string $invoiceNumber) {
         try {
             $trans = $this->transService->findByInvoiceNumber($invoiceNumber);
+
+        if($trans->user_id != auth()->user()->id) {
+            return response()
+                ->json(["message" => "You are not authorized to view this invoice!", "result" => null])
+                ->setStatusCode(Response::HTTP_FORBIDDEN);
+        }
 
         if(!$trans) {
             return response()

@@ -23,7 +23,6 @@ class Product extends Model
 
     protected $hidden = [
         'cost_price',
-        'quantity',
         'created_at',
         'updated_at'
     ];

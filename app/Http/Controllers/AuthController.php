@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -25,9 +26,7 @@ class AuthController extends Controller
             ->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
 
-        $validatedData = $req->validated();
-
-        $user = User::where('email', $validatedData['email'])->first();
+        $user = User::where('email', $req['email'])->first();
 
         if ($user) {
             return response()
@@ -39,12 +38,13 @@ class AuthController extends Controller
 
         try{
             $user = User::create([
-                'name' => $validatedData['name'],
-                'email' => $validatedData['email'],
-                'password' => $validatedData['password'],
-                'role_id' => $validatedData['role_id'],
+                'name' => $req['name'],
+                'email' => $req['email'],
+                'password' => $req['password'],
+                'role_id' => $req['role_id'],
             ]);
 
+            $user->refresh();
             $token = $user->createToken('user_auth_token')->plainTextToken;
 
             return response()
@@ -52,12 +52,13 @@ class AuthController extends Controller
                 'message' => "User account created",
                 'result' => [
                     'grant' => $token,
-                    'user' => $user,
+                    'user' => $user->load('role'),
                     ]
                 ])
             ->setStatusCode(Response::HTTP_CREATED);
         } catch(\Exception $ex) {
             // Log error
+            Log::error($ex);
         }
 
         return response()->json([
@@ -110,6 +111,7 @@ class AuthController extends Controller
             ])->setStatusCode(200);
         } catch(\Exception $ex) {
             // Log error
+            Log::error($ex);
         }
 
         return response()->json([

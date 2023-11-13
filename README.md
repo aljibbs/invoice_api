@@ -12,7 +12,7 @@ Run database seeder to populate database roles
 
 -   **Endpoint Base Url: `/api`**
 
--   **Accept Header `application/json`**
+-   **Accept-Header `application/json`**
 
 ## Get All Roles
 
