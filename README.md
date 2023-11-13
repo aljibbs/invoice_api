@@ -3,11 +3,15 @@
 ## Using the PHP laravel framework, design an invoicing REST Backend API.
 
 -   **IMPORTANT**
-    Run database seeder before proceeding to test to seed the database with predefined roles
+    Run the commands below before testing
 
-    ```
-    php artisan db:seed
-    ```
+Run schema migrations
+`    php artisan migrate:fresh
+   `
+
+Run database seeder to populate database roles
+`    php artisan db:seed
+   `
 
 -   **Endpoint Base Url: /api**
 
