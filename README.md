@@ -10,9 +10,9 @@ Run schema migrations
 Run database seeder to populate database roles
 `php artisan db:seed`
 
--   **Endpoint Base Url: /api**
+-   **Endpoint Base Url: `/api`**
 
--   **Accept Header application/json**
+-   **Accept Header `application/json`**
 
 ## Get All Roles
 
