@@ -3,6 +3,7 @@
 namespace App\Services\Transaction;
 
 use App\Models\Transaction;
+use App\Models\TransactionItem;
 
 class TransactionService implements ITransactionService{
     public function all(): array {
@@ -21,6 +22,6 @@ class TransactionService implements ITransactionService{
     }
 
     public function saveItems(array $data) {
-        return Transaction::insert($data);
+        return TransactionItem::insert($data);
     }
 }

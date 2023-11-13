@@ -24,6 +24,16 @@ class TransactionItem extends Model
         'unit_price' => 'float',
     ];
 
+    protected $hidden = [
+        'id',
+        'transaction_id',
+        'product_id',
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $with = ['product'];
+
 
     public function transaction(): BelongsTo
     {

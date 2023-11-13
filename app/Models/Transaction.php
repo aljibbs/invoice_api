@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use DateTime;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +17,8 @@ class Transaction extends Model
 
     protected $dates = ['due_date'];
 
+    protected $with = ['customer', 'transactionItems'];
+
     protected $fillable = [
         'user_id',
         'customer_id',
@@ -22,8 +27,18 @@ class Transaction extends Model
         'invoice_number'
     ];
 
+    protected $appends = [ 'issued_date' ];
+
     protected $casts = [
         'total_amount' => 'float',
+    ];
+
+    protected $hidden = [
+        'id',
+        'user_id',
+        'customer_id',
+        'created_at',
+        'updated_at'
     ];
 
     protected function totalAmount(): Attribute
@@ -33,14 +48,16 @@ class Transaction extends Model
         );
     }
 
-    public function getIssuedDateAttribute()
+    protected function getIssuedDateAttribute()
     {
-        return $this->created_at->format('M d, Y');
+        return $this->created_at->toFormattedDateString();
     }
 
-    public function getDueDateAttribute()
+    protected function dueDate(): Attribute
     {
-        return $this->due_date->format('M d, Y');
+        return Attribute::make(
+            get: fn ($value) => Carbon::parse($value)->toFormattedDateString(),
+        );
     }
 
     public function transactionItems(): HasMany

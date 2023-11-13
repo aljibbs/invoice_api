@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionsController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,7 @@ Route::group(['middleware' => 'auth:sanctum'], function (){
         Route::post('/', [ProductController::class, 'save']);
         Route::get('/', [ProductController::class, 'all']);
     });
+
 });
 
 

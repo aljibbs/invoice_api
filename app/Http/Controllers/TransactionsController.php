@@ -10,6 +10,8 @@ use App\Services\Product\IProductService;
 use App\Services\Transaction\ITransactionService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TransactionsController extends Controller
 {
@@ -36,6 +38,7 @@ class TransactionsController extends Controller
             ->setStatusCode(Response::HTTP_OK);
         } catch (\Exception $ex) {
             // Log error
+            Log::error($ex);
         }
 
         return response()->json([
@@ -48,19 +51,21 @@ class TransactionsController extends Controller
         $validatedData = $req->validated();
 
         try {
-
-            $customer = $this->customerService->findByPhone($req['customer_phone']);
+            $customer = $this->customerService->findByPhone($validatedData['customer_phone']);
 
             if(!$customer) {
                 $customer = $this->customerService->create([
-                    'phone' => $req['customer_phone'],
-                    'name' => $req['customer_name'],
-                    'address' => $req['customer_address'],
+                    'phone' => $validatedData['customer_phone'],
+                    'name' => $validatedData['customer_name'],
+                    'address' => $validatedData['customer_address'],
                 ]);
             }
 
+
+            DB::beginTransaction();
+
             $trans = $this->transService->create([
-                'user_id' => $req->user()->id,
+                'user_id' => auth()->user()->id,
                 'customer_id' => $customer->id,
             ]);
 
@@ -68,19 +73,32 @@ class TransactionsController extends Controller
             $itemsData = [];
 
             foreach ($validatedData['items'] as $item) {
-                $product = $this->productService->findById($item['product_id']);
-                $amt = $item['quantity'] * $product->selling_price;
+                $productId = $item['product_id'];
+                $quantity = (int) $item['quantity'];
+
+                $product = $this->productService->findById($productId);
+
+                if($quantity > $product->quantity) {
+                    throw new \Exception("Quantity of {$product->name} is not sufficient. Only {$product->quantity} left");
+                }
+
+                $amt = $quantity * $product->selling_price;
 
                 $itemsData[] = [
                     'transaction_id' => $trans->id,
                     'product_id' => $product->id,
                     'unit_price' => $product->selling_price,
-                    'quantity' => $item['quantity'],
+                    'quantity' => $quantity,
                     'amount' => $amt,
                     'description' => $product->name,
                 ];
 
                 $transCost += $amt;
+
+                $product->update([
+                    'quantity' => $product->quantity - $quantity
+                ]);
+
             }
 
             $this->transService->saveItems($itemsData);
@@ -89,22 +107,28 @@ class TransactionsController extends Controller
                 'invoice_number' => $this->generateInvoiceNumber($trans->id),
             ]);
 
-            $trans->fresh();
+            DB::commit();
+
+            $trans->refresh();
 
             return response()
             ->json([
                 "message" => "Transaction Saved!",
-                "result" => $trans->load('transactionItems')
+                "result" => $trans
             ])
             ->setStatusCode(Response::HTTP_CREATED);
         } catch (\Exception $ex) {
             // Log error
+            DB::rollBack();
+            Log::error($ex);
+
+            return response()->json([
+                "message" => $ex->getMessage(),
+                "result" => null
+            ])->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        return response()->json([
-            "message" => "Application error. Please try again.",
-            "result" => null
-        ])->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+
     }
 
     public function getInvoice(string $invoiceNumber) {
@@ -123,6 +147,7 @@ class TransactionsController extends Controller
 
         } catch (\Exception $ex) {
             // Log error
+            Log::error($ex);
         }
 
         return response()->json([

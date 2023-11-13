@@ -14,7 +14,7 @@ class CustomerService implements ICustomerService{
     }
 
     public function findByPhone($phoneNumber): ?Customer{
-        return Customer::where('phone_number', $phoneNumber)->first();
+        return Customer::where('phone', $phoneNumber)->first();
     }
 
     public function create(array $data): Customer{
