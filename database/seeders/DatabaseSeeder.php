@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $roles = [
+            ['name' => 'admin', 'description' => 'A User who is an admin'],
+            ['name' => 'sales', 'description' => 'A User who is in sales'],
+        ];
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        foreach ($roles as $role) {
+            Role::create($role);
+        }
     }
 }

@@ -12,9 +12,22 @@
 Using the PHP laravel framework, design an invoicing REST Backend
 API.
 
+-   **IMPORTANT**
+    Run database seeder before proceeding to test to seed the database with predefined roles
+
+    ```
+    php artisan db:seed
+    ```
+
 -   **Endpoint Base Url: /api**
 
 -   **Accept Header application/json**
+
+## Get All Roles
+
+-   **GET /roles**
+
+## Create a new User
 
 -   **POST /auth/register**
 
@@ -24,7 +37,10 @@ API.
         - email
         - password
         - password_confirmation
+        - role_id
         ```
+
+## Log in User
 
 -   **POST /auth/login**
 
@@ -35,6 +51,8 @@ API.
         - password
         ```
 
+## Logout User
+
 -   **GET /auth/logout**
 
     -   Authorization Token
@@ -43,7 +61,9 @@ API.
         Bearer {token}
         ```
 
--   **GET /me (Get current User's Profile)**
+## Get current User's Profile
+
+-   **GET /me**
 
     -   Authorization Token
 
@@ -51,7 +71,9 @@ API.
         Bearer {token}
         ```
 
--   **POST /products (Create new product)**
+## Create new product
+
+-   **POST /products**
 
     -   Authorization Token
 
@@ -68,7 +90,9 @@ API.
         - selling_price
         ```
 
--   **GET /products/{product_id} (Get product)**
+## Get single product
+
+-   **GET /products/{product_id}**
 
     -   Authorization Token
 
@@ -76,7 +100,9 @@ API.
         Bearer {token}
         ```
 
--   **GET /products (Get all products)**
+## Get all products
+
+-   **GET /products**
 
     -   Authorization Token
 
@@ -84,7 +110,9 @@ API.
         Bearer {token}
         ```
 
--   **PUT /products/{product_id} (Update product)**
+## Update a product
+
+-   **PUT /products/{product_id}**
 
     -   Authorization Token
 
@@ -101,7 +129,9 @@ API.
         - selling_price (optional)
         ```
 
--   **POST /products/{product_id}/add_stock (Add new stock quantity)**
+## Add quantity to product stock
+
+-   **POST /products/{product_id}/add_stock**
 
     -   Authorization Token
 
@@ -114,6 +144,45 @@ API.
         ```
         quantity
         ```
+
+## Get all transactions
+
+-   **GET /transactions**
+
+    -   Authorization Token
+
+            ```
+            Bearer {token}
+            ```
+
+## Get a single transaction
+
+-   **GET /transactions/{invoiceNumber}**
+
+    -   Authorization Token
+
+            ```
+            Bearer {token}
+            ```
+
+## Create a new transaction
+
+-   **POST /transactions**
+
+    -   Authorization Token
+
+            ```
+            Bearer {token}
+            ```
+
+        -   Parameters
+
+            ```
+            customer_phone
+            customer_name (optional)
+            customer_address (optional)
+            items (array) [ {product_id, quantity} ]
+            ```
 
 ## License
 
