@@ -6,12 +6,10 @@
     Run the commands below before testing
 
 Run schema migrations
-`    php artisan migrate:fresh
-   `
+`php artisan migrate:fresh`
 
 Run database seeder to populate database roles
-`    php artisan db:seed
-   `
+`php artisan db:seed`
 
 -   **Endpoint Base Url: /api**
 
