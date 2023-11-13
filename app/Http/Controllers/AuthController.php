@@ -15,6 +15,7 @@ class AuthController extends Controller
         $validator = Validator::make($req->input(), [
             'name'    => 'required|string|max:255',
             'email'    => 'required|email',
+            'role_id'   => 'required|integer|exists:roles,id',
             'password'  => 'required|confirmed',
         ]);
 
@@ -24,7 +25,9 @@ class AuthController extends Controller
             ->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
 
-        $user = User::where('email', $req['email'])->first();
+        $validatedData = $req->validated();
+
+        $user = User::where('email', $validatedData['email'])->first();
 
         if ($user) {
             return response()
@@ -36,9 +39,10 @@ class AuthController extends Controller
 
         try{
             $user = User::create([
-                'name' => $req['name'],
-                'email' => $req['email'],
-                'password' => $req['password'],
+                'name' => $validatedData['name'],
+                'email' => $validatedData['email'],
+                'password' => $validatedData['password'],
+                'role_id' => $validatedData['role_id'],
             ]);
 
             $token = $user->createToken('user_auth_token')->plainTextToken;

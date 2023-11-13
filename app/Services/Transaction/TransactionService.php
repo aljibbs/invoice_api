@@ -10,6 +10,10 @@ class TransactionService implements ITransactionService{
         return Transaction::all()->toArray();
     }
 
+    public function allByUser($id): array {
+        return Transaction::where('user_id', $id)->get()->toArray();
+    }
+
     public function findById($id): ?Transaction{
         return Transaction::find($id);
     }

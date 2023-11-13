@@ -28,7 +28,11 @@ class TransactionsController extends Controller
 
     public function all() {
         try {
-            $trans = $this->transService->all();
+            if(auth()->user()->isAdmin()) {
+                $trans = $this->transService->all();
+            } else {
+                $trans = $this->transService->allByUser(auth()->user()->id);
+            }
 
             return response()
             ->json([

@@ -13,6 +13,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $with = ['role'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -33,6 +35,7 @@ class User extends Authenticatable
         'password',
     ];
 
+
     /**
      * The attributes that should be cast.
      *
@@ -45,5 +48,14 @@ class User extends Authenticatable
 
     public function role() : BelongsTo {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Check if the user has the 'admin' role.
+     *
+     * @return bool
+     */
+    public function isAdmin() : bool {
+        return $this->role->name == 'admin';
     }
 }
