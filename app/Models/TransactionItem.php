@@ -22,6 +22,7 @@ class TransactionItem extends Model
 
     protected $casts = [
         'unit_price' => 'float',
+        'amount' => 'float',
     ];
 
     protected $hidden = [
@@ -45,9 +46,13 @@ class TransactionItem extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function getUnitPriceAttribute() {
-        return number_format((float) $this->unit_price, 2, '.', '');
+    protected function amount(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => number_format($value, 2, '.', ''),
+        );
     }
+
 
     protected function unitPrice(): Attribute
     {
