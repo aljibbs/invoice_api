@@ -26,7 +26,7 @@ Route::group(['prefix' => 'auth'], function (){
     Route::middleware('auth:sanctum')->get('logout', [AuthController::class, 'logout']);
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function (){
+Route::middleware(['auth:sanctum', 'roleCheck:admin,sales'])->group(function (){
     Route::get('/me', function (Request $request) {
         return response()->json([
             'message' => "User Profile",
@@ -42,10 +42,13 @@ Route::group(['middleware' => 'auth:sanctum'], function (){
 
     Route::group(['prefix' => 'products'], function (){
         Route::get('/{id}', [ProductController::class, 'getProduct']);
-        Route::put('/{id}', [ProductController::class, 'update']);
-        Route::post('/{id}/add_stock', [ProductController::class, 'addStock']);
-        Route::post('/', [ProductController::class, 'save']);
         Route::get('/', [ProductController::class, 'all']);
+
+        Route::middleware('roleCheck:admin')->group(function(){
+            Route::put('/{id}', [ProductController::class, 'update']);
+            Route::post('/{id}/add_stock', [ProductController::class, 'addStock']);
+            Route::post('/', [ProductController::class, 'save']);
+        });
     });
 
 });
