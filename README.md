@@ -2,8 +2,7 @@
 
 ## Using the PHP laravel framework, design an invoicing REST Backend API.
 
--   **IMPORTANT**
-    Run the commands below before testing
+**IMPORTANT: Run the commands below before testing**
 
 Run schema migrations
 `php artisan migrate:fresh`
