@@ -120,7 +120,7 @@ class ProductController extends Controller
         $validatedData = $req->validated();
 
         try{
-            $product = $this->productService->findById($id);
+            $product = $this->productService->findAndLockById($id);
 
             if(!$product) {
                 return response()
@@ -128,9 +128,7 @@ class ProductController extends Controller
                 ->setStatusCode(Response::HTTP_NOT_FOUND);
             }
 
-            $product->update([
-                'quantity' => $product->quantity + $validatedData['quantity'],
-            ]);
+            $product->increment('quantity', $validatedData['quantity']);
             $product->fresh();
 
             return response()->json([

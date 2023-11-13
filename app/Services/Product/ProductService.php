@@ -13,6 +13,10 @@ class ProductService implements IProductService{
         return Product::find($id);
     }
 
+    public function findAndLockById($id): ?Product{
+        return Product::where('id', $id)->lockForUpdate()->first();
+    }
+
     public function create(array $data): Product{
         return Product::create($data);
     }

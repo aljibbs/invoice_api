@@ -80,7 +80,7 @@ class TransactionsController extends Controller
                 $productId = $item['product_id'];
                 $quantity = (int) $item['quantity'];
 
-                $product = $this->productService->findById($productId);
+                $product = $this->productService->findAndLockById($productId);
 
                 if($quantity > $product->quantity) {
                     return response()->json(['message' => "Quantity of {$product->name} is not sufficient. Only {$product->quantity} left",  'result' => null], Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -99,9 +99,7 @@ class TransactionsController extends Controller
 
                 $transCost += $amt;
 
-                $product->update([
-                    'quantity' => $product->quantity - $quantity
-                ]);
+                $product->decrement('quantity', $quantity);
 
             }
 
